@@ -1,0 +1,5 @@
+{
+    "configurations": [
+        database: "docker exec -it wordpress_docker_manager_cli_mariadb-1 /bin/bash",
+    ]
+}

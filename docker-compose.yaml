@@ -1,5 +1,22 @@
 version: "3"
-include:
-  - ./containers/wordpress/docker-compose.yaml
-  - ./containers/database/docker-compose.yaml
-  - ./containers/phpmyadmin/docker-compose.yaml
+
+services:
+  
+  wordpress:
+    extends:
+      file: ./containers/wordpress/wordpress.yaml
+      service: wordpress
+  
+  database:
+    extends:
+      file: ./containers/mariadb/mariadb.yaml
+      service: mariadb
+      
+  phpmyadmin:
+    extends:
+      file: ./containers/phpmyadmin/phpmyadmin.yaml
+      service: phpmyadmin
+  
+volumes:
+  wp_data:
+  db_data:

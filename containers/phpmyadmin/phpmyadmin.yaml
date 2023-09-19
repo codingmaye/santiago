@@ -1,0 +1,12 @@
+services:
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+        - 82:80
+        environment:
+        - MYSQL_ROOT_PASSWORD=somewordpress
+        - MYSQL_DATABASE=wordpress
+        - MYSQL_USER=wordpress
+        - MYSQL_PASSWORD=wordpress
+        - PMA_HOST=mariadb

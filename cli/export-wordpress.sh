@@ -2,12 +2,7 @@
 #
 # Perform hot backups of WordPress files in a Docker Container.
 
-
-backup_dir="../backups/to_export"
-backup_filename="wordpress.tar"
-wordpress_dir="/var/www/html"
-backup_target="wp-content/"                # Change it according to your needs
-container_name="support_mac_and_pc-wordpress-1"
+source ./config/wordpress.sh
 
 #######################################
 # Create WordPress backup file.
@@ -18,11 +13,11 @@ container_name="support_mac_and_pc-wordpress-1"
 #   None
 #######################################
 function backup(){
-  docker exec -it $container_name /bin/bash -c "tar -cvf ${backup_filename} ${backup_target}" 
+  docker exec -it ${container_name} /bin/bash -c "tar -cvf ${export_filename} ${backup_dir}/${backup_target}/" 
 }
 
 #######################################
-# Copy the WordPress backup file to localhost.
+# export the WordPress backup file to localhost.
 # Globals:
 #   container_name
 #   wordpress_dir
@@ -30,8 +25,8 @@ function backup(){
 # Arguments:
 #   None
 #######################################
-function copy(){
-  docker cp $container_name:${wordpress_dir}/$backup_filename $backup_dir/
+function export(){
+  docker cp ${container_name}:${backup_dir}/${export_filename} ${export_dir}/
 }
  
 #######################################
@@ -42,9 +37,9 @@ function copy(){
 #   None
 #######################################
 function cleanup() {
-  docker exec -it $container_name /bin/bash -c "rm ${backup_filename}";
+  docker exec -it $container_name /bin/bash -c "rm ${export_filename}";
 }
 
 backup;
-copy;
+export;
 cleanup;
